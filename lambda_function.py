@@ -1,5 +1,7 @@
+import requests
+
+
 def lambda_handler(event, context):
-    return {
-        'statusCode': 200,
-        'body': "Hello bro"
-    }
+    url = "https://www.coursecreator360.com/"
+    response = requests.get(url)
+    return {"statusCode": 200, "body": response.text}
