@@ -1,8 +1,10 @@
+import json
 from bs4 import BeautifulSoup
 import requests
 
 def lambda_handler(event, context):
-    url = event['body']['website_url']
+    event_body = json.loads(event['body'])
+    url = event_body['website_url']
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
     images = soup.find_all('img')
