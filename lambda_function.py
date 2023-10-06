@@ -1,7 +1,10 @@
+from bs4 import BeautifulSoup
 import requests
-
 
 def lambda_handler(event, context):
     url = "https://www.coursecreator360.com/"
     response = requests.get(url)
-    return {"statusCode": 200, "body": response.text}
+    soup = BeautifulSoup(response.text, 'html.parser')
+    images = soup.find_all('img')
+    image_links = [img['src'] for img in images if 'src' in img.attrs]
+    return {"statusCode": 200, "body": image_links}
