@@ -19,7 +19,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-west-2
       - run: zip -j lambda1.zip ./main.py
-      - run: aws lambda update-function-code --function-name=lambda1 --zip-file=fileb://lambda1.zip
+      - run: aws lambda update-function-code --function-name=paramikoConnect --zip-file=fileb://lambda1.zip
 
   lambda2:
     runs-on: ubuntu-latest
