@@ -31,7 +31,6 @@ jobs:
         aws-region: us-west-2
 
     - name: Deploy to AWS Lambda
-      uses: aws-actions/aws-lambda-deploy@v1
+      uses: serverless/actions@master
       with:
-        function-name: paramikoConnect
-        zip-file: main.py
+        args: deploy
