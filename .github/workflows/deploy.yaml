@@ -18,20 +18,5 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-west-2
-      - run: zip -j lambda1.zip ./main.py
+      - run: zip -j lambda1.zip ./lambda_function.py
       - run: aws lambda update-function-code --function-name=paramikoConnect --zip-file=fileb://lambda1.zip
-
-  lambda2:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
-        with:
-          python-version: 3.11
-      - uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-west-2
-      - run: zip -j lambda2.zip ./main.py
-      - run: aws lambda update-function-code --function-name=lambda2 --zip-file=fileb://lambda2.zip
