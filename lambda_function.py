@@ -1,16 +1,10 @@
-import json
-import requests
+import boto3
 
 def lambda_handler(event, context):
-    body = json.loads(event['body'])
-    symbol = body['symbol']
-
-    url = "https://alpha-vantage.p.rapidapi.com/query"
-    querystring = {"function":"GLOBAL_QUOTE","symbol":symbol,"datatype":"json"}
-    headers = {
-        "X-RapidAPI-Key": "0519a48ad0msh3652be7be3a1163p1b2223jsn9212f364e710",
-        "X-RapidAPI-Host": "alpha-vantage.p.rapidapi.com"
+    s3 = boto3.client('s3', region_name='us-west-2')
+    s3.create_bucket(Bucket='canyon-test-lambda-bucket')
+    return {
+        'statusCode': 200,
+        'body': 'Bucket created successfully'
     }
-
-    response = requests.get(url, headers=headers, params=querystring)
-    return {'statusCode': 200, 'body': response.json()}
+#END
