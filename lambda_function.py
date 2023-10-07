@@ -24,12 +24,14 @@ def lambda_handler(event, context):
     # Upload the file to the bucket
     try:
         s3.upload_file('/tmp/' + file_name, bucket_name, file_name)
-        # Make the file public
-        s3.put_object_acl(ACL='public-read', Bucket=bucket_name, Key=file_name)
-        url = f"https://{bucket_name}.s3.amazonaws.com/{file_name}"
     except NoCredentialsError:
-        # Generate a presigned URL for the object
-        url = s3.generate_presigned_url('get_object', Params={'Bucket': bucket_name, 'Key': file_name}, ExpiresIn=3600)
+        return {
+            'statusCode': 400,
+            'body': 'No AWS credentials found'
+        }
+    
+    # Generate a presigned URL for the object
+    url = s3.generate_presigned_url('get_object', Params={'Bucket': bucket_name, 'Key': file_name}, ExpiresIn=3600)
     
     return {
         'statusCode': 200,
